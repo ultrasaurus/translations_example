@@ -61,3 +61,15 @@ specs pass again
     Finished in 6.57 seconds
     29 examples, 0 failures
 
+
+
+select * from phrases where id = (select phrase_id from translations where translated_phrase_id = 2 union select translated_phrase_id from translations where phrase_id = 2)
+
+
+
+SELECT phrase_id FROM "translations" WHERE "translations"."translated_phrase_id" = 2 UNION SELECT translated_phrase_id FROM "translations" WHERE "translations"."phrase_id" = 2
+
+Phrase.where(:id => translations.project(:phrase_id).where(translations[:translated_phrase_id].eq(2)).union(translations.project(:translated_phrase_id).where(translations[:phrase_id].eq(2))))
+
+
+
